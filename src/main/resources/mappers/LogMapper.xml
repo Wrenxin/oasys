@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.oasys.mappers.log.LogMapper">
+
+	<select id="findAll" parameterType="java.lang.String" resultType="cn.gson.oasys.model.entity.log.Loges">
+		SELECT
+		id,
+		user,
+		content,
+		time
+		FROM
+		w_log
+		WHERE user=#{user}
+		ORDER BY
+		id DESC
+	</select>
+	<insert id="add"  keyProperty="id" keyColumn="id" parameterType="cn.gson.oasys.model.entity.log.Loges">
+		INSERT INTO
+		w_log(user,content,time)
+		VALUES
+		(#{user},#{content},#{time})
+	</insert>
+	<update id="update" parameterType="cn.gson.oasys.model.entity.log.Loges">
+		update w_log
+		<set>
+			<if test="user != null">user=#{user},</if>
+			<if test="content != null">content=#{content},</if>
+			<if test="time != null">time=#{time}</if>
+		</set>
+		where id=#{id}
+	</update>
+	<delete id="remove">
+		DELETE FROM
+		w_log
+		WHERE
+		id = #{id}
+	</delete>
+
+	<select id="findOne" resultType="cn.gson.oasys.model.entity.log.Loges">
+		SELECT
+		id,
+		user,
+		content,
+		time
+		FROM
+		w_log
+		WHERE
+		id = #{id}
+	</select>
+</mapper>

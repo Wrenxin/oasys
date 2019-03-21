@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.oasys.mappers.sign.SignMapper">
+
+	<select id="find" parameterType="java.lang.String" resultType="cn.gson.oasys.model.entity.sign.Sign">
+		SELECT
+		sign_id,
+		sign_name,
+		sign_time,
+		sign_ip,
+		sign_type,
+		sign_check
+		FROM
+		w_sign
+		WHERE
+		sign_name=#{signName}
+		ORDER BY
+		sign_id DESC
+	</select>
+	<insert id="add" keyProperty="signId" keyColumn="sign_id" parameterType="cn.gson.oasys.model.entity.sign.Sign">
+		INSERT INTO
+		w_sign(sign_name,sign_time,sign_ip,sign_type,sign_check)
+		VALUES
+		(#{signName},#{signTime},#{signIp},#{signType},#{signCheck})
+	</insert>
+
+	<select id="findCheck" parameterType="java.lang.String" resultType="cn.gson.oasys.model.entity.sign.Sign">
+		SELECT
+		sign_id,
+		sign_name,
+		sign_time,
+		sign_ip,
+		sign_type,
+		sign_check
+		FROM
+		w_sign
+		WHERE
+		sign_check=#{signCheck}
+	</select>
+
+	<select id="findAll" parameterType="java.lang.String" resultType="cn.gson.oasys.model.entity.sign.Sign">
+		SELECT
+		sign_id,
+		sign_name,
+		sign_time,
+		sign_ip,
+		sign_type,
+		sign_check
+		FROM
+		w_sign
+		ORDER BY
+		sign_id DESC
+	</select>
+</mapper>

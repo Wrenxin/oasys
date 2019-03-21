@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.oasys.mappers.workreport.ReportMapper">
+
+	<select id="findAll" parameterType="java.lang.String" resultType="cn.gson.oasys.model.entity.workreport.Report">
+		SELECT
+		report_id,
+		report_name,
+		report_content,
+		report_time
+		FROM
+		w_report
+		where report_name=#{name}
+		ORDER BY
+		report_id DESC
+	</select>
+	<insert id="add"  keyProperty="reportId" keyColumn="report_id" parameterType="cn.gson.oasys.model.entity.workreport.Report">
+		INSERT INTO
+		w_report(report_name,report_content,report_time)
+		VALUES
+		(#{reportName},#{reportContent},#{reportTime})
+	</insert>
+	<update id="update" parameterType="cn.gson.oasys.model.entity.workreport.Report">
+		update w_report
+		<set>
+			<if test="reportName != null">report_name=#{reportName},</if>
+			<if test="reportContent != null">report_content=#{reportContent},</if>
+			<if test="reportTime != null">report_time=#{reportTime}</if>
+		</set>
+		where report_id=#{reportId}
+	</update>
+	<delete id="remove">
+		DELETE FROM
+		w_report
+		WHERE
+		report_id=#{reportId}
+	</delete>
+
+	<select id="findOne" resultType="cn.gson.oasys.model.entity.workreport.Report">
+		SELECT
+		report_id,
+		report_name,
+		report_content,
+		report_time
+		FROM
+		w_report
+		WHERE
+		report_id=#{reportId}
+	</select>
+</mapper>

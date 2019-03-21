@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.oasys.mappers.salaryview.SalaryViewMapper">
+
+	<select id="findAll" resultType="cn.gson.oasys.model.entity.user.User">
+		SELECT
+		user_id,
+		real_name,
+		salary
+		FROM
+		w_user
+		ORDER BY
+		department_id DESC
+	</select>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.oasys.mappers.staff.StaffMapper">
+	<resultMap type="cn.gson.oasys.model.entity.user.User" id="Map1">
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName" />
+		<result column="user_tel" property="userTel"/>
+		<result column="real_name" property="realName"/>
+		<result column="address" property="address"/>
+		<result column="user_edu" property="userEdu"/>
+		<result column="school" property="school"/>
+		<result column="idcard" property="idCard"/>
+		<result column="bank" property="bank"/>
+		<result column="department_id" property="departmentId"/>
+		<result column="sex" property="sex"/>
+		<result column="salary" property="salary"/>
+		<result column="hire_time" property="hireTime"/>
+		<result column="password" property="password"/>
+		<result column="t_id1" property="role.roleId"/>
+		<result column="t_name1" property="role.roleName"/>
+	</resultMap>
+
+	<select id="findAll" resultType="cn.gson.oasys.model.entity.user.User">
+		SELECT
+		user_id,
+		department_id,
+		user_name,
+		real_name,
+		user_tel,
+		salary
+		FROM
+		w_user
+		ORDER BY
+		department_id DESC
+	</select>
+    <insert id="add" keyProperty="userId" keyColumn="user_id" parameterType="cn.gson.oasys.model.entity.user.User">
+		INSERT INTO
+		w_user(user_name,user_tel,real_name,eamil,address,user_edu,school,idcard,
+		bank,department_id,sex,salary,hire_time,password,role_id)
+		VALUES
+		(#{userName},#{userTel},#{realName},#{eamil},#{address},#{userEdu},
+		#{school},#{idCard},#{bank},#{departmentId},#{sex},#{salary},#{hireTime},#{password},#{role.roleId})
+	</insert>
+    <update id="update" parameterType="cn.gson.oasys.model.entity.user.User">
+        update w_user
+        <set>
+            <if test="userName != null">user_name=#{userName},</if>
+            <if test="userTel != null">user_tel=#{userTel},</if>
+            <if test="realName != null">real_name=#{realName},</if>
+            <if test="eamil != null">eamil=#{eamil},</if>
+			<if test="address != null">address=#{address},</if>
+			<if test="userEdu != null">user_edu=#{userEdu},</if>
+			<if test="school != null">school=#{school},</if>
+			<if test="idCard != null">idcard=#{idCard},</if>
+			<if test="bank != null">bank=#{bank},</if>
+			<if test="departmentId != null">department_id=#{departmentId},</if>
+			<if test="sex != null">sex=#{sex},</if>
+			<if test="salary != null">salary=#{salary},</if>
+			<if test="hireTime != null">hire_time=#{hireTime},</if>
+            <if test="password != null">password=#{password},</if>
+			<if test="role != null">role_id=#{role.roleId}</if>
+        </set>
+        where user_id=#{userId}
+    </update>
+    <delete id="remove">
+		DELETE FROM
+		w_user
+		WHERE
+		user_id=#{userId}
+	</delete>
+    <select id="findOne" resultMap="Map1">
+
+		SELECT
+		u.user_id,
+		u.user_name,
+		u.user_tel,
+		u.real_name,
+		u.eamil,
+		u.address,
+		u.user_edu,
+		u.school,
+		u.idcard,
+		u.bank,
+		u.department_id,
+		u.sex,
+		u.salary,
+		u.hire_time,
+		u.password,
+		r.role_id as t_id1,
+		r.role_name AS t_name1
+		FROM
+		w_user u,
+		w_role r
+		WHERE
+		u.role_id=r.role_id
+		AND
+		user_id=#{userId}
+	</select>
+	<select id="findByName" resultType="cn.gson.oasys.model.entity.user.User">
+		SELECT
+		user_id,
+		department_id,
+		user_name,
+		real_name,
+		user_tel,
+		salary
+		FROM
+		w_user
+		WHERE
+		real_name=#{realName}
+	</select>
+
+	<update id="updatePassword" parameterType="cn.gson.oasys.model.entity.user.User">
+		update w_user
+		<set>
+			<if test="password != null">password=#{password}</if>
+		</set>
+		where user_id=#{userId}
+	</update>
+
+	<select id="findRole" resultType="cn.gson.oasys.model.entity.role.Role">
+		SELECT
+		role_id,
+		role_name
+		FROM
+		w_role
+		ORDER BY
+		role_id ASC
+	</select>
+</mapper>

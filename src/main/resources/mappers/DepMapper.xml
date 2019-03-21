@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.gson.oasys.mappers.department.DepMapper">
+
+	<select id="findAll" resultType="cn.gson.oasys.model.entity.department.Department">
+		SELECT
+		department_id,
+		department_name,
+		department_tel,
+		department_addr
+		FROM
+		w_department
+		ORDER BY
+		department_id DESC
+	</select>
+	<insert id="add"  keyProperty="id" keyColumn="id" parameterType="cn.gson.oasys.model.entity.department.Department">
+		INSERT INTO
+		w_department(department_name,department_tel,department_addr)
+		VALUES
+		(#{departmentName},#{departmentTel},#{departmentAddr})
+	</insert>
+	<update id="update" parameterType="cn.gson.oasys.model.entity.department.Department">
+		update w_department
+		<set>
+			<if test="departmentName != null">department_name=#{departmentName},</if>
+			<if test="departmentTel != null">department_tel=#{departmentTel},</if>
+			<if test="departmentAddr != null">department_addr=#{departmentAddr}</if>
+		</set>
+		where department_id=#{departmentId}
+	</update>
+	<delete id="remove">
+		DELETE FROM
+		w_department
+		WHERE
+		department_id=#{departmentId}
+	</delete>
+
+	<select id="findOne" resultType="cn.gson.oasys.model.entity.department.Department">
+		SELECT
+		department_id,
+		department_name,
+		department_tel,
+		department_addr
+		FROM
+		w_department
+		WHERE
+		department_id=#{departmentId}
+	</select>
+</mapper>
